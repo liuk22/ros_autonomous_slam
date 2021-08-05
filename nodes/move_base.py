@@ -6,8 +6,9 @@ import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
-def movebase_client(x,y):
-    client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+
+def movebase_client(x, y):
+    client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
     client.wait_for_server()
 
     goal = MoveBaseGoal()
@@ -25,10 +26,11 @@ def movebase_client(x,y):
     else:
         return client.get_result()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     try:
-        rospy.init_node('movebase_client_py')
-        result = movebase_client(2,0.5)
+        rospy.init_node("movebase_client_py")
+        result = movebase_client(2, 0.5)
         if result:
             rospy.loginfo("Goal execution done!")
     except rospy.ROSInterruptException:
