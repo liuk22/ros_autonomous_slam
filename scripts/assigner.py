@@ -3,16 +3,10 @@
 # --------Include modules---------------
 from copy import copy
 import rospy
-from visualization_msgs.msg import Marker
-from geometry_msgs.msg import Point
 from nav_msgs.msg import OccupancyGrid
-import tf
 from ros_autonomous_slam.msg import PointArray
-from time import time
 from numpy import array
-from numpy import linalg as LA
-from numpy import all as All
-from numpy import inf
+
 from functions import robot, informationGain, discount
 from numpy.linalg import norm
 

@@ -3,9 +3,6 @@
 
 #--------Include modules---------------
 from copy import copy
-import rospy
-from nav_msgs.msg import OccupancyGrid
-
 import numpy as np
 import cv2
 
