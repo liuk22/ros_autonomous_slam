@@ -29,7 +29,7 @@ float sign(float n)
 }
 
 //Nearest function
-std::vector<float> Nearest(std::vector<std::vector<float>> V, std::vector<float> x)
+std::vector<float> Nearest(std::vector<std::vector<float> > V, std::vector<float> x)
 {
 
   float min = Norm(V[0], x);

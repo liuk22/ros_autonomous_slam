@@ -26,7 +26,7 @@ float Norm(std::vector<float>, std::vector<float>);
 float sign(float);
 
 //Nearest function prototype
-std::vector<float> Nearest(std::vector<std::vector<float>>, std::vector<float>);
+std::vector<float> Nearest(std::vector< std::vector<float> >, std::vector<float>);
 
 //Steer function prototype
 std::vector<float> Steer(std::vector<float>, std::vector<float>, float);

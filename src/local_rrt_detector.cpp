@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 
 	geometry_msgs::Point trans;
 	trans = points.points[4];
-	std::vector<std::vector<float>> V;
+	std::vector< std::vector<float> > V;
 	std::vector<float> xnew;
 	xnew.push_back(trans.x);
 	xnew.push_back(trans.y);
