@@ -41,5 +41,8 @@
   <param name="delay_after_assignement" value="0.5"/>
   <param name="rate" value="100"/>
   </node>
+  <node pkg="ros_autonomous_slam" type="exploration_progress.py" name="exploration_progress">
+  <param name="map_topic" value="/map"/>
+  </node> 
   
 </launch>
