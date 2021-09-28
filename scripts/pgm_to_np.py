@@ -34,8 +34,8 @@ pyplot.show()
 
 '''
 from matplotlib import pyplot
-arr = np.loadtxt("09-21-2021T10-17-25_stage9_thresh90.txt")
+arr = np.loadtxt("lol.txt")
 print(arr.shape)
-print(np.sum(arr < 0) / arr.shape[0] / arr.shape[1])
+print(np.sum(arr < 0) / (arr.shape[0] * arr.shape[1]))
 pyplot.imshow(arr, pyplot.cm.gray)
 pyplot.show()

@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 
-ADJUSTED_MAP_BOUNDS = (50, 50, 300, 300) # x1, y1, x2, y2 of rectangular bounds of explorable indoor
+ADJUSTED_MAP_BOUNDS = (50, 50, 350, 350) # x1, y1, x2, y2 of rectangular bounds of explorable indoor
 STAGES = {0.001: False, 
     0.1 : False, 
     0.2 : False,
@@ -27,23 +27,22 @@ LOG_FOLDER_PATH = "/mnt/f/College/Research/Workspace/catkin_ws/src/ros_autonomou
 def callback(message):
     if rospy.get_time() - TIME_LAST < SAMPLING_PERIOD:  
         return 
-    map_grid = np.reshape(message.data, (message.info.height, message.info.width)).T
+    map_grid = np.reshape(message.data, (message.info.height, message.info.width))
     x1, x2 = ADJUSTED_MAP_BOUNDS[0], ADJUSTED_MAP_BOUNDS[2]
     y1, y2 = ADJUSTED_MAP_BOUNDS[1], ADJUSTED_MAP_BOUNDS[3]
-    map_grid_adjusted = map_grid[y1:y2, x1:x2]
+    map_grid_adjusted = map_grid[x1:x2, y1:y2]
 
-    num_grid_squares = map_grid_adjusted.shape[0] * map_grid_adjusted.shape[1]
-    fraction_mapped = 1 - (np.sum(map_grid_adjusted < 0) / num_grid_squares)
+    num_grid_squares = np.abs((x1 - x2) * (y1 - y2))
+    num_unmapped_squares = np.sum(map_grid_adjusted < 0)
+    fraction_mapped = 1.0 - (float(num_unmapped_squares) / float(num_grid_squares))
     
-    global STAGES 
-    found = False 
+    global STAGES  
     for i, k in enumerate(sorted(list(STAGES.keys()))): 
         if not STAGES[k] and k <= fraction_mapped:
             STAGES[k] = True 
-            log_file(map_grid_adjusted, i, k)
-            found = True 
+            log_file(map_grid_adjusted, i, k) 
             break 
-    if not found: 
+    if all(STAGES.values()): 
         os.system("rosnode kill --all")
 
     global TIME_LAST
@@ -55,13 +54,11 @@ def log_file(grid_as_np, stage_num, stage_thresh):
     log_name = "{}{}".format(LOG_FOLDER_PATH, time.strftime("%m-%d-%YT%H-%M-%S", named_tuple))
     log_name += "_stage{}_thresh{}.txt".format(stage_num, int(stage_thresh * 100))
     with open(log_name, 'w') as fh: 
-        np.savetxt(fh, grid_as_np, fmt='%3.5f')
+        np.savetxt(fh, grid_as_np, fmt='%3.4f')
 
 
 def node(): 
     rospy.init_node('exploration_progress', anonymous=True)
-    
-    
     map_topic = rospy.get_param("~map_topic", "map")
     global TIME_LAST
     TIME_LAST = rospy.get_time()
