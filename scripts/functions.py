@@ -35,7 +35,6 @@ class robot:
         cond = 0
         while cond == 0:
             try:
-                rospy.loginfo("Waiting for the robot transform")
                 (trans, rot) = self.listener.lookupTransform(
                     self.global_frame, "/" + self.robot_frame, rospy.Time(0)
                 )

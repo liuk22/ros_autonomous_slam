@@ -103,7 +103,6 @@ def tmnt_controller():
         )
         print("distance from front wall in cm =", format(s_d * 100))
         print("linear_vel=", format(linear_vel), " angular_vel=", format(angular_zvel))
-        rospy.loginfo("\n")
 
         # publish cmd_vel
         vel_msg = Twist(Vector3(linear_vel, 0, 0), Vector3(0, 0, angular_zvel))
